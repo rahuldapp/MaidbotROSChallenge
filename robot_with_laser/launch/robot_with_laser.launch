@@ -1,0 +1,40 @@
+<launch>
+
+<rosparam>
+
+<!-- range_min: Description: Minimum range of the sensor (m) -->
+<!-- range_max: Description: Maximum range of the sensor (m) -->
+<!-- angle_min: Description: Minimum FOV angle of the sensor (rad) -->
+<!-- angle_max: Description: Maximum FOV angle of the sensor (rad) -->
+<!-- samples:   Description: Number of samples of the sensor -->
+
+laser_one/range_min: 0.5
+laser_one/range_max: 10.0
+laser_one/angle_min: -3.14
+laser_one/angle_max: 3.14
+laser_one/samples: 720
+
+laser_two/range_min: 0.2
+laser_two/range_max: 10.0
+laser_two/angle_min: -3.14
+laser_two/angle_max: 3.14
+laser_two/samples: 1440
+
+<!-- laser_name: Description: Name of the sensor. Currently supports only LaserOne and LaserTwo -->
+<!-- laser_name: Description: Update rate of the sensor -->
+laser_name: LaserOne
+laser_node_rate: 20.0
+
+<!-- rotation_radius: Description: rotation radius of the robot -->
+robot/rotation_radius: 3.0
+
+</rosparam>
+
+<node pkg="tf" type="static_transform_publisher" name="base_link_laser_broadcaster" args="0 0 0.3 0 0 0 1 base_link laser 100" /> 
+
+<node pkg="robot_with_laser" type="run_laser" name="run_laser" output="screen"/>
+<node pkg="robot_with_laser" type="run_robot" name="run_robot" output="screen"/>
+
+<node pkg="rviz" type="rviz" name="robot_with_laser" args="-d $(find robot_with_laser)/robot_with_laser.rviz"/>
+
+</launch>
